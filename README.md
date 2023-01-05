@@ -13,7 +13,7 @@ ___
 2. numpy
 3. math
 4. scipy
-5. matplotlib == 1.2.0
+5. matplotlib == 3.1.1
 6. xlrd
 7. sys
 8. os
