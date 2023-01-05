@@ -384,6 +384,7 @@ class CoastalDataProc(QWidget):
         plt.close('all')
         self.ui.sy5_WaveFormOut.setText('')
         self.ui.sy5_ShawenOut.setText('')
+        self.ui.sy5_XierziOut.setText('')
         self.sy5_H_rawdata = []
         for root, dirs, files in os.walk("datas\第5次海动实验\\"):
             if files:
@@ -1558,6 +1559,10 @@ class CoastalDataProc(QWidget):
                 canvas.scatter(zeropoint_x, zeropoint_y, s=self.ui.sy5_waveformZeroPointsScale.value(), color='red',
                                marker='^', label="0")
             averageWaveHeight = sum(sy5_subWaveHeightList[8:]) / len(sy5_subWaveHeightList[8:])
+            if i == 0:
+                self.sy5_H11 = averageWaveHeight
+            if i == 1:
+                self.sy5_H3 = averageWaveHeight
             sum_T = 0
             for zeropoint_index in range(1, len(crosszeropoints_Index_list)):
                 sum_T += (crosszeropoints_Index_list[zeropoint_index] - crosszeropoints_Index_list[zeropoint_index - 1])
@@ -1604,39 +1609,78 @@ class CoastalDataProc(QWidget):
         canvas.set_xlim(1, 100)
         canvas.set_ylim(0.005, 0.3)
 
-        H = 0.03
-        h = 0.1
-        s = 2.65
-        d50 = 0.32
+        H = 0.026
+        h = 0.3
+        s = 2.59
+        d50 = 0.0003
         kN = 2.5 * d50
-        v = 10e-6
+        v = 1e-6
         L = self.sy5_k(self.sy5_T3,h,0.001)
         k = 2*math.pi/L
 
-        am3 = 0.03 / (2 * math.sinh(k * 0.1))
-        Um3 = H * self.sy5_w3 / (2 * math.sinh(self.sy5_k3 * h))
-        a3 = Um3 * self.sy5_T3 / (2 * math.pi)
-        # a/kN = 0.06696011187304532 < 50
-        fw3 = 0.4 * (a3 / kN) ** (-0.75)
-        Ufm3 = math.sqrt(fw3 / 2) * Um3
+        H = self.sy5_H3*0.01
+        #am3 = 0.03 / (2 * math.sinh(k * 0.1))
+        Um3 = H*math.pi/self.sy5_T3/math.sinh(k*h)
+        a3 = Um3*self.sy5_T3/2/math.pi
+        if a3/kN > 50:
+            fw3 = 0.04*(a3/kN)**(-1/4)
+        else:
+            fw3 = 0.4*(a3/kN)**(-0.75)
+        Ufm3 = math.sqrt(fw3/2)*Um3
         Q3 = Ufm3 ** 2 / (9.81 * (s - 1) * d50)
-        Rf3 = d50 * Ufm3 * 0.001 / v
-        Q3 = 0.21 * (2 * am3 / 0.3) ** 0.5
+        Rf3 = d50 * Ufm3 / v
+        #Q3 = 0.21 * (2 * am3 / 0.3) ** 0.5
+        self.sy5_xierziLog("3cm波,所需数据-------------------------\n")
+        self.sy5_xierziLog("h = {}m\n".format(h))
+        self.sy5_xierziLog("s = {}\n".format(s))
+        self.sy5_xierziLog("d50 = {}m\n".format(d50))
+        self.sy5_xierziLog("kN = {}\n".format(kN))
+        self.sy5_xierziLog("L = {}m\n".format(L))
+        self.sy5_xierziLog("k = {}\n".format(k))
 
-        am11 = 0.11 / (2 * math.sinh(k * 0.1))
-        Um11 = H * self.sy5_w11 / (2 * math.sinh(self.sy5_k11 * h))
-        a11 = Um11 * self.sy5_T11 / (2 * math.pi)
-        # a/kN = 0.06696011187304532 < 50
-        fw11 = 0.4 * (a11 / kN) ** (-0.75)
+        self.sy5_xierziLog("H = {}m\n".format(H))
+        self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
+        self.sy5_xierziLog("T = {}s\n".format(self.sy5_T3))
+        self.sy5_xierziLog("Um = {}\n".format(Um3))
+        self.sy5_xierziLog("a = {}\n".format(a3))
+        self.sy5_xierziLog("a/kN = {}\n".format(a3/kN))
+        self.sy5_xierziLog("fw = {}\n".format(fw3))
+        self.sy5_xierziLog("Ufm = {}\n".format(Ufm3))
+        self.sy5_xierziLog("\n")
+        self.sy5_xierziLog("θc = {}\n".format(Q3))
+        self.sy5_xierziLog("Rf = {}\n".format(Rf3))
+
+        H = self.sy5_H11*0.01
+        #am11 = 0.11 / (2 * math.sinh(k * 0.1))
+        Um11 = H * math.pi / self.sy5_T11 / math.sinh(k * h)
+        a11 = Um11 * self.sy5_T11 / 2 / math.pi
+        if a11 / kN > 50:
+            fw11 = 0.04 * (a11 / kN) ** (-1 / 4)
+        else:
+            fw11 = 0.4 * (a11 / kN) ** (-0.75)
         Ufm11 = math.sqrt(fw11 / 2) * Um11
         Q11 = Ufm11 ** 2 / (9.81 * (s - 1) * d50)
-        Rf11 = d50 * Ufm11 * 0.001 / v
-        Q11 = 0.21 * (2 * am11 / 0.3) ** 0.5
-        #print('k3,k11=', self.sy5_k3, self.sy5_k11)
-        print('k = ',k)
-        print('am3,am11=', am3, am11)
-        print('θ3,θ11=', Q3, Q11)
-        print('Rf3,Rf11=', Rf3, Rf11)
+        Rf11 = d50 * Ufm11 / v
+        self.sy5_xierziLog("\n\n")
+        self.sy5_xierziLog("11cm波,所需数据-------------------------\n")
+        self.sy5_xierziLog("h = {}m\n".format(h))
+        self.sy5_xierziLog("s = {}\n".format(s))
+        self.sy5_xierziLog("d50 = {}m\n".format(d50))
+        self.sy5_xierziLog("kN = {}\n".format(kN))
+        self.sy5_xierziLog("L = {}m\n".format(L))
+        self.sy5_xierziLog("k = {}\n".format(k))
+
+        self.sy5_xierziLog("H = {}m\n".format(H))
+        self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
+        self.sy5_xierziLog("T = {}s\n".format(self.sy5_T11))
+        self.sy5_xierziLog("Um = {}\n".format(Um11))
+        self.sy5_xierziLog("a = {}\n".format(a11))
+        self.sy5_xierziLog("a/kN = {}\n".format(a11 / kN))
+        self.sy5_xierziLog("fw = {}\n".format(fw11))
+        self.sy5_xierziLog("Ufm = {}\n".format(Ufm11))
+        self.sy5_xierziLog("\n")
+        self.sy5_xierziLog("θc = {}\n".format(Q11))
+        self.sy5_xierziLog("Rf = {}\n".format(Rf11))
         canvas.scatter([Rf3, Rf11], [Q3, Q11],
                        s=self.ui.sy5_ShawenPointsScale.value(), color='red', marker='o', label="1")
 
@@ -1659,16 +1703,20 @@ class CoastalDataProc(QWidget):
         canvas.set_xlim(0.02, 2)
         canvas.set_ylim(0.01, 0.4)
 
-        H = 0.03
-        h = 0.1
-        Ufm = 0
-        s = 2.65
-        d50 = 0.32
+        h = 0.3
+        s = 2.59
+        d50 = 0.0003
         kN = 2.5 * d50
-        Um = H * self.sy5_w11 / (2 * math.sinh(self.sy5_k11 * h))
-        a = Um * self.sy5_T11 / (2 * math.pi)
-        # a/kN = 0.06696011187304532 < 50
-        fw = 0.4 * (a / kN) ** (-0.75)
+        v = 1e-6
+        L = self.sy5_k(self.sy5_T3, h, 0.001)
+        k = 2 * math.pi / L
+        H = self.sy5_H11 * 0.01
+        Um = H * math.pi / self.sy5_T11 / math.sinh(k * h)
+        a = Um * self.sy5_T11 / 2 / math.pi
+        if a / kN > 50:
+            fw = 0.04 * (a / kN) ** (-1 / 4)
+        else:
+            fw = 0.4 * (a / kN) ** (-0.75)
         Ufm = math.sqrt(fw / 2) * Um
         Q = Ufm ** 2 / (9.81 * (s - 1) * d50)
         self.sy5_shawenOLog("H = {}m\n".format(H))
@@ -1687,6 +1735,8 @@ class CoastalDataProc(QWidget):
 
     def sy5_shawenOLog(self, s):
         self.ui.sy5_ShawenOut.setText(self.ui.sy5_ShawenOut.toPlainText() + s)
+    def sy5_xierziLog(self, s):
+        self.ui.sy5_XierziOut.setText(self.ui.sy5_XierziOut.toPlainText() + s)
 
     def sy5_k(self, T, h, e):
         End = False
