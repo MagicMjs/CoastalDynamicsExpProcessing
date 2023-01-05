@@ -1114,7 +1114,7 @@
        <enum>QAbstractSpinBox::DefaultStepType</enum>
       </property>
       <property name="value">
-       <double>2.000000000000000</double>
+       <double>1.000000000000000</double>
       </property>
      </widget>
     </widget>
@@ -2336,7 +2336,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算(没做完)</string>
+      <string>开始计算(没搞完)</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy3">
@@ -2848,41 +2848,6 @@
       </property>
       <property name="readOnly">
        <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_51">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>240</y>
-        <width>61</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Y轴范围:±</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="sy3_waveformYScale">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>240</y>
-        <width>62</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="minimum">
-       <double>-10.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>10.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>0.500000000000000</double>
-      </property>
-      <property name="value">
-       <double>1.000000000000000</double>
       </property>
      </widget>
      <widget class="QSpinBox" name="spinBox_smoothWindowSize_sy3">
@@ -4250,41 +4215,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_71">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>240</y>
-        <width>61</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Y轴范围:±</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="sy4_waveformYScale">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>240</y>
-        <width>62</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="minimum">
-       <double>-10.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>10.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>0.500000000000000</double>
-      </property>
-      <property name="value">
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
      <widget class="QSpinBox" name="spinBox_smoothWindowSize_sy4">
       <property name="geometry">
        <rect>
@@ -5447,41 +5377,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_92">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>240</y>
-        <width>61</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Y轴范围:±</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="sy5_waveformYScale">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>240</y>
-        <width>62</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="minimum">
-       <double>-10.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>10.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>0.500000000000000</double>
-      </property>
-      <property name="value">
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="groupBox_33">
       <property name="geometry">
        <rect>
@@ -5707,13 +5602,13 @@
        </rect>
       </property>
       <property name="singleStep">
-       <double>0.100000000000000</double>
+       <double>0.010000000000000</double>
       </property>
       <property name="stepType">
        <enum>QAbstractSpinBox::DefaultStepType</enum>
       </property>
       <property name="value">
-       <double>9.000000000000000</double>
+       <double>1.000000000000000</double>
       </property>
      </widget>
      <widget class="QLabel" name="label_106">
@@ -5739,10 +5634,10 @@
        </rect>
       </property>
       <property name="singleStep">
-       <double>0.100000000000000</double>
+       <double>0.010000000000000</double>
       </property>
       <property name="value">
-       <double>53.000000000000000</double>
+       <double>1.000000000000000</double>
       </property>
      </widget>
      <widget class="QLabel" name="label_107">
@@ -5850,6 +5745,28 @@
    </property>
    <property name="text">
     <string>&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;GitHub项目源码&lt;/a&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::TextBrowserInteraction</set>
+   </property>
+   <property name="buddy">
+    <cstring></cstring>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_86">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>730</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing/releases/&quot;&gt;获取最新版本软件&lt;/a&gt;</string>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>

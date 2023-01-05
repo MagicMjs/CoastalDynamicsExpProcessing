@@ -382,6 +382,12 @@ class CoastalDataProc(QWidget):
 
     def btn_StartProc_sy5_click(self):
         plt.close('all')
+        reply = QMessageBox.question(self, '提醒',
+                                     "请确认波要素Hr/Lr正确填写：\nHr = {}mm\nLr = {}mm\n".format(
+                                         self.ui.sy5_ShawenHr.value() ,self.ui.sy5_ShawenLr.value()), QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.No)
+        if reply == QMessageBox.No:
+            return
         self.ui.sy5_WaveFormOut.setText('')
         self.ui.sy5_ShawenOut.setText('')
         self.ui.sy5_XierziOut.setText('')
