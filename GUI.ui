@@ -78,7 +78,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(记得填三次的波高)</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy1">
@@ -1162,7 +1163,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+瑞利分布的图需要修改</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy2">
@@ -2336,7 +2338,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算(没搞完)</string>
+      <string>开始计算
+(理论图没做完)</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy3">
@@ -3721,7 +3724,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(浅水变形没算)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_41">
@@ -5061,7 +5065,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(记得填Hr和Lr)</string>
      </property>
     </widget>
     <widget class="QWidget" name="verticalLayoutWidget_14">

@@ -107,8 +107,10 @@ class CoastalDataProc(QWidget):
             return
         plt.close('all')
         self.ui.sy1_WaveFormOut.setText('')
+        self.sy1_datafilenames = []
         for root, dirs, files in os.walk("datas\第1次海动实验\\" + self.ui.filelist_sy1.currentText() + '\\'):
             if files:
+                self.sy1_datafilenames = files
                 self.sy1_rawdata = []
                 for sig_file in files:
                     with open(root + sig_file, encoding='utf-8') as file:
@@ -134,6 +136,7 @@ class CoastalDataProc(QWidget):
 
         for i in range(drawIndex, min(drawNumber + drawIndex, len(self.sy1_coldatas))):
             fig = plt.figure()
+            #print(self.sy1_datafilenames[i].split('-')[-1][0:-4].split('H'))
             fig.canvas.set_window_title("<规则波实验> 第{}次实验".format(i + 1))
             ax_waveform = plt.subplot2grid((2, 1), (0, 0), colspan=1, rowspan=1)
             ax_waveform.tick_params(labelsize=self.ui.sy1_AxisFontSize.value())
@@ -384,7 +387,8 @@ class CoastalDataProc(QWidget):
         plt.close('all')
         reply = QMessageBox.question(self, '提醒',
                                      "请确认波要素Hr/Lr正确填写：\nHr = {}mm\nLr = {}mm\n".format(
-                                         self.ui.sy5_ShawenHr.value() ,self.ui.sy5_ShawenLr.value()), QMessageBox.Yes | QMessageBox.No,
+                                         self.ui.sy5_ShawenHr.value(), self.ui.sy5_ShawenLr.value()),
+                                     QMessageBox.Yes | QMessageBox.No,
                                      QMessageBox.No)
         if reply == QMessageBox.No:
             return
@@ -885,9 +889,9 @@ class CoastalDataProc(QWidget):
         self.sy1_w = 2 * math.pi / (sum(wave_periods) / len(wave_periods))
         self.sy1_k = self.sy5_k(sum(wave_periods) / len(wave_periods), self.sy1_H,
                                 0.001)  # (2 * math.pi / (sum(wave_periods) / len(wave_periods))) ** 2 / 9.81
-        theorety_c = (9.81 * (sum(wave_periods) / len(wave_periods)) / 2 / math.pi) * math.tanh(self.sy1_k*self.sy1_H)
+        theorety_c = (9.81 * (sum(wave_periods) / len(wave_periods)) / 2 / math.pi) * math.tanh(self.sy1_k * self.sy1_H)
         theorety_L = theorety_c * (sum(wave_periods) / len(wave_periods))
-        theorety_sigma = 9.81 * self.sy1_k * math.tanh(self.sy1_k*self.sy1_H)
+        theorety_sigma = 9.81 * self.sy1_k * math.tanh(self.sy1_k * self.sy1_H)
 
         self.ui.sy1_WaveFormOut.setText(
             self.ui.sy1_WaveFormOut.toPlainText() + '-------------Airy理论速度c = gT*tanhkh/2π = {0:.4f}m/s\n-------------Airy理论波长L = gT²*tanhkh/2π = {1:.4f}m\n-------------Airy理论波浪圆频率σ = gktanhkh = {2:.4f}\n'.format(
@@ -1617,76 +1621,85 @@ class CoastalDataProc(QWidget):
 
         H = 0.026
         h = 0.3
-        s = 2.59
+        s = 2.65
         d50 = 0.0003
         kN = 2.5 * d50
         v = 1e-6
-        L = self.sy5_k(self.sy5_T3,h,0.001)
-        k = 2*math.pi/L
+        L = 2#self.sy5_k(self.sy5_T3, h, 0.001)
+        k = 2 * math.pi / L
 
-        H = self.sy5_H3*0.01
-        #am3 = 0.03 / (2 * math.sinh(k * 0.1))
-        Um3 = H*math.pi/self.sy5_T3/math.sinh(k*h)
-        a3 = Um3*self.sy5_T3/2/math.pi
-        if a3/kN > 50:
-            fw3 = 0.04*(a3/kN)**(-1/4)
-        else:
-            fw3 = 0.4*(a3/kN)**(-0.75)
-        Ufm3 = math.sqrt(fw3/2)*Um3
-        Q3 = Ufm3 ** 2 / (9.81 * (s - 1) * d50)
-        Rf3 = d50 * Ufm3 / v
-        #Q3 = 0.21 * (2 * am3 / 0.3) ** 0.5
-        self.sy5_xierziLog("3cm波,所需数据-------------------------\n")
-        self.sy5_xierziLog("h = {}m\n".format(h))
-        self.sy5_xierziLog("s = {}\n".format(s))
-        self.sy5_xierziLog("d50 = {}m\n".format(d50))
-        self.sy5_xierziLog("kN = {}\n".format(kN))
-        self.sy5_xierziLog("L = {}m\n".format(L))
-        self.sy5_xierziLog("k = {}\n".format(k))
+        Rf3 = 0
+        Rf11 = 0
+        Q3 = 0
+        Q11 = 0
 
-        self.sy5_xierziLog("H = {}m\n".format(H))
-        self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
-        self.sy5_xierziLog("T = {}s\n".format(self.sy5_T3))
-        self.sy5_xierziLog("Um = {}\n".format(Um3))
-        self.sy5_xierziLog("a = {}\n".format(a3))
-        self.sy5_xierziLog("a/kN = {}\n".format(a3/kN))
-        self.sy5_xierziLog("fw = {}\n".format(fw3))
-        self.sy5_xierziLog("Ufm = {}\n".format(Ufm3))
-        self.sy5_xierziLog("\n")
-        self.sy5_xierziLog("θc = {}\n".format(Q3))
-        self.sy5_xierziLog("Rf = {}\n".format(Rf3))
+        if self.ui.checkBox_sy5_ch_2.isChecked():
+            L = self.sy5_k(self.sy5_T3, h, 0.001)
+            H = self.sy5_H3 * 0.01
+            # am3 = 0.03 / (2 * math.sinh(k * 0.1))
+            Um3 = H * math.pi / self.sy5_T3 / math.sinh(k * h)
+            a3 = Um3 * self.sy5_T3 / 2 / math.pi
+            if a3 / kN > 50:
+                fw3 = 0.04 * (a3 / kN) ** (-1 / 4)
+            else:
+                fw3 = 0.4 * (a3 / kN) ** (-0.75)
+            Ufm3 = math.sqrt(fw3 / 2) * Um3
+            Q3 = Ufm3 ** 2 / (9.81 * (s - 1) * d50)
+            Rf3 = d50 * Ufm3 / v
+            # Q3 = 0.21 * (2 * am3 / 0.3) ** 0.5
+            self.sy5_xierziLog("3cm波,所需数据-------------------------\n")
+            self.sy5_xierziLog("h = {}m\n".format(h))
+            self.sy5_xierziLog("s = {}\n".format(s))
+            self.sy5_xierziLog("d50 = {}m\n".format(d50))
+            self.sy5_xierziLog("kN = {}\n".format(kN))
+            self.sy5_xierziLog("L = {}m\n".format(L))
+            self.sy5_xierziLog("k = {}\n".format(k))
 
-        H = self.sy5_H11*0.01
-        #am11 = 0.11 / (2 * math.sinh(k * 0.1))
-        Um11 = H * math.pi / self.sy5_T11 / math.sinh(k * h)
-        a11 = Um11 * self.sy5_T11 / 2 / math.pi
-        if a11 / kN > 50:
-            fw11 = 0.04 * (a11 / kN) ** (-1 / 4)
-        else:
-            fw11 = 0.4 * (a11 / kN) ** (-0.75)
-        Ufm11 = math.sqrt(fw11 / 2) * Um11
-        Q11 = Ufm11 ** 2 / (9.81 * (s - 1) * d50)
-        Rf11 = d50 * Ufm11 / v
-        self.sy5_xierziLog("\n\n")
-        self.sy5_xierziLog("11cm波,所需数据-------------------------\n")
-        self.sy5_xierziLog("h = {}m\n".format(h))
-        self.sy5_xierziLog("s = {}\n".format(s))
-        self.sy5_xierziLog("d50 = {}m\n".format(d50))
-        self.sy5_xierziLog("kN = {}\n".format(kN))
-        self.sy5_xierziLog("L = {}m\n".format(L))
-        self.sy5_xierziLog("k = {}\n".format(k))
+            self.sy5_xierziLog("H = {}m\n".format(H))
+            self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
+            self.sy5_xierziLog("T = {}s\n".format(self.sy5_T3))
+            self.sy5_xierziLog("Um = {}\n".format(Um3))
+            self.sy5_xierziLog("a = {}\n".format(a3))
+            self.sy5_xierziLog("a/kN = {}\n".format(a3 / kN))
+            self.sy5_xierziLog("fw = {}\n".format(fw3))
+            self.sy5_xierziLog("Ufm = {}\n".format(Ufm3))
+            self.sy5_xierziLog("\n")
+            self.sy5_xierziLog("θc = {}\n".format(Q3))
+            self.sy5_xierziLog("Rf = {}\n".format(Rf3))
 
-        self.sy5_xierziLog("H = {}m\n".format(H))
-        self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
-        self.sy5_xierziLog("T = {}s\n".format(self.sy5_T11))
-        self.sy5_xierziLog("Um = {}\n".format(Um11))
-        self.sy5_xierziLog("a = {}\n".format(a11))
-        self.sy5_xierziLog("a/kN = {}\n".format(a11 / kN))
-        self.sy5_xierziLog("fw = {}\n".format(fw11))
-        self.sy5_xierziLog("Ufm = {}\n".format(Ufm11))
-        self.sy5_xierziLog("\n")
-        self.sy5_xierziLog("θc = {}\n".format(Q11))
-        self.sy5_xierziLog("Rf = {}\n".format(Rf11))
+        if self.ui.checkBox_sy5_ch_1.isChecked():
+            L = self.sy5_k(self.sy5_T11, h, 0.001)
+            H = self.sy5_H11 * 0.01
+            # am11 = 0.11 / (2 * math.sinh(k * 0.1))
+            Um11 = H * math.pi / self.sy5_T11 / math.sinh(k * h)
+            a11 = Um11 * self.sy5_T11 / 2 / math.pi
+            if a11 / kN > 50:
+                fw11 = 0.04 * (a11 / kN) ** (-1 / 4)
+            else:
+                fw11 = 0.4 * (a11 / kN) ** (-0.75)
+            Ufm11 = math.sqrt(fw11 / 2) * Um11
+            Q11 = Ufm11 ** 2 / (9.81 * (s - 1) * d50)
+            Rf11 = d50 * Ufm11 / v
+            self.sy5_xierziLog("\n\n")
+            self.sy5_xierziLog("11cm波,所需数据-------------------------\n")
+            self.sy5_xierziLog("h = {}m\n".format(h))
+            self.sy5_xierziLog("s = {}\n".format(s))
+            self.sy5_xierziLog("d50 = {}m\n".format(d50))
+            self.sy5_xierziLog("kN = {}\n".format(kN))
+            self.sy5_xierziLog("L = {}m\n".format(L))
+            self.sy5_xierziLog("k = {}\n".format(k))
+
+            self.sy5_xierziLog("H = {}m\n".format(H))
+            self.sy5_xierziLog("v = {0:.6f}m²/s\n".format(v))
+            self.sy5_xierziLog("T = {}s\n".format(self.sy5_T11))
+            self.sy5_xierziLog("Um = {}\n".format(Um11))
+            self.sy5_xierziLog("a = {}\n".format(a11))
+            self.sy5_xierziLog("a/kN = {}\n".format(a11 / kN))
+            self.sy5_xierziLog("fw = {}\n".format(fw11))
+            self.sy5_xierziLog("Ufm = {}\n".format(Ufm11))
+            self.sy5_xierziLog("\n")
+            self.sy5_xierziLog("θc = {}\n".format(Q11))
+            self.sy5_xierziLog("Rf = {}\n".format(Rf11))
         canvas.scatter([Rf3, Rf11], [Q3, Q11],
                        s=self.ui.sy5_ShawenPointsScale.value(), color='red', marker='o', label="1")
 
@@ -1710,15 +1723,23 @@ class CoastalDataProc(QWidget):
         canvas.set_ylim(0.01, 0.4)
 
         h = 0.3
-        s = 2.59
+        s = 2.65
         d50 = 0.0003
         kN = 2.5 * d50
         v = 1e-6
-        L = self.sy5_k(self.sy5_T3, h, 0.001)
+        L = self.sy5_k(1.2, h, 0.001)
+        if self.ui.checkBox_sy5_ch_2.isChecked():
+            L = self.sy5_k(self.sy5_T3, h, 0.001)
+        if self.ui.checkBox_sy5_ch_1.isChecked():
+            L = self.sy5_k(self.sy5_T11, h, 0.001)
         k = 2 * math.pi / L
         H = self.sy5_H11 * 0.01
-        Um = H * math.pi / self.sy5_T11 / math.sinh(k * h)
-        a = Um * self.sy5_T11 / 2 / math.pi
+        if self.ui.checkBox_sy5_ch_2.isChecked():
+            Um = H * math.pi / self.sy5_T3 / math.sinh(k * h)
+            a = Um * self.sy5_T3 / 2 / math.pi
+        if self.ui.checkBox_sy5_ch_1.isChecked():
+            Um = H * math.pi / self.sy5_T11 / math.sinh(k * h)
+            a = Um * self.sy5_T11 / 2 / math.pi
         if a / kN > 50:
             fw = 0.04 * (a / kN) ** (-1 / 4)
         else:
@@ -1730,6 +1751,8 @@ class CoastalDataProc(QWidget):
         self.sy5_shawenOLog("s = {}\n".format(s))
         self.sy5_shawenOLog("d50 = {}\n".format(d50))
         self.sy5_shawenOLog("kN = {}\n".format(kN))
+        self.sy5_shawenOLog("L = {}m\n".format(L))
+        self.sy5_shawenOLog("k = {}\n".format(k))
         self.sy5_shawenOLog("Um = {}\n".format(Um))
         self.sy5_shawenOLog("a = {}\n".format(a))
         self.sy5_shawenOLog("fw = {}\n".format(fw))
@@ -1741,6 +1764,7 @@ class CoastalDataProc(QWidget):
 
     def sy5_shawenOLog(self, s):
         self.ui.sy5_ShawenOut.setText(self.ui.sy5_ShawenOut.toPlainText() + s)
+
     def sy5_xierziLog(self, s):
         self.ui.sy5_XierziOut.setText(self.ui.sy5_XierziOut.toPlainText() + s)
 
