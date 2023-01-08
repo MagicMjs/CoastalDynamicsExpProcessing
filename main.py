@@ -555,14 +555,15 @@ class CoastalDataProc(QWidget):
         canvas.set_ylabel("波高(cm)", fontsize=self.ui.sy2_AxisFontSize.value())
         ax = plt.gca()
         y_smooth = self.smooth_data[index]
-        # 寻找下跨零点
+        # 寻找零点
         lower_crosszeropoints_X_list = []  # 下跨零点的理论X坐标
         lower_crosszeropoints_Index_list = []  # 下跨零点的数据点索引
         zeropoint_x = []
         zeropoint_y = []
         for i in range(1, len(self.timeline)):
-            if (self.ui.shangkua_Radiobtn.isChecked()):
-                if (y_smooth[i - 1] < 0 and y_smooth[i] > 0):
+            if self.ui.shangkua_Radiobtn.isChecked():
+                #上跨零点法
+                if y_smooth[i - 1] < 0 < y_smooth[i]:
                     x_a = self.time_step * abs(y_smooth[i - 1]) / (abs(y_smooth[i - 1]) + abs(y_smooth[i]))
                     lower_crosszeropoints_Index_list.append(i)
                     zeropoint_x.append((i - 1) * self.time_step + x_a)
@@ -570,15 +571,17 @@ class CoastalDataProc(QWidget):
                     if len(zeropoint_x) > 1:
                         lower_crosszeropoints_X_list.append(zeropoint_x[-2:])
             else:
-                if y_smooth[i - 1] > 0 and y_smooth[i] < 0:
+                #下跨零点法
+                if y_smooth[i - 1] > 0 > y_smooth[i]:
                     x_a = self.time_step * y_smooth[i] / (y_smooth[i] + abs(y_smooth[i + 1]))
                     lower_crosszeropoints_Index_list.append(i)
                     zeropoint_x.append(i * self.time_step + x_a)
                     zeropoint_y.append((y_smooth[i] + y_smooth[i + 1]) * 0)
-                    if (len(zeropoint_x) > 1):
+                    if len(zeropoint_x) > 1:
                         lower_crosszeropoints_X_list.append(zeropoint_x[-2:])
 
         subWaveHeightList = []  # 每一个波周期的波高(波峰和波谷的距离H)
+        self.sy2_subTList = []
         subWaveHeight_Max_X_List = []
         subWaveHeight_Max_Y_List = []
         subWaveHeight_Min_X_List = []
@@ -589,6 +592,7 @@ class CoastalDataProc(QWidget):
                            lower_crosszeropoints_Index_list[index_zeropoints - 1]:lower_crosszeropoints_Index_list[
                                index_zeropoints]])
             subWaveHeightList.append(abs(min(subdata)) + abs(max(subdata)))
+            self.sy2_subTList.append(len(subdata)*self.time_step)
             subWaveHeight_Max_X_List.append(
                 (lower_crosszeropoints_Index_list[index_zeropoints - 1] + subdata.index(max(subdata))) * self.time_step)
             subWaveHeight_Max_Y_List.append(max(subdata))
@@ -666,8 +670,12 @@ class CoastalDataProc(QWidget):
         AverageWaveHeight = sum(subWaveHeightList) / len(subWaveHeightList)
         EffectiveWaveHeight = sum(subWaveHeightList[0:math.floor(len(subWaveHeightList) / 3)]) / math.floor(
             len(subWaveHeightList) / 3)
+        First3T = sum(self.sy2_subTList[0:math.floor(len(self.sy2_subTList) / 3)]) / math.floor(
+            len(self.sy2_subTList) / 3)
         First10WaveHeight = sum(subWaveHeightList[0:math.floor(len(subWaveHeightList) / 10)]) / math.floor(
             len(subWaveHeightList) / 10)
+        First10T = sum(self.sy2_subTList[0:math.floor(len(self.sy2_subTList) / 3)]) / math.floor(
+            len(self.sy2_subTList) / 10)
         First13WaveHeight = sum(subWaveHeightList[0:math.floor(len(subWaveHeightList) * 0.13)]) / math.floor(
             len(subWaveHeightList) * 0.13)
         AverageWaveHeightSquareroot = self.AverageSquareroot(subWaveHeightList)
@@ -675,19 +683,24 @@ class CoastalDataProc(QWidget):
             return AverageWaveHeight
         Waveout = r"平均波高:{0:.2f}cm".format(AverageWaveHeight) + '\n' + \
                   r"最大波高:{0:.2f}cm".format(max(subWaveHeightList)) + '\n' + \
-                  r"有效波高:{0:.2f}cm".format(EffectiveWaveHeight) + '\n' + \
+                  r"有效(1/3)波高:{0:.2f}cm".format(EffectiveWaveHeight) + '\n' + \
+                  r"有效(1/3)周期:{0:.2f}s".format(First3T) + '\n' + \
                   r"1/10波高:{0:.2f}cm".format(First10WaveHeight) + '\n' + \
+                  r"1/10周期:{0:.2f}s".format(First10T) + '\n' + \
                   r"13%波高:{0:.2f}cm".format(First13WaveHeight) + '\n' + \
                   r"均方根波高:{0:.2f}cm".format(AverageWaveHeightSquareroot) + '\n' + \
                   r"详情看图"
 
         self.ui.textEdit_WaveOut.setText(Waveout)
+        canvas.text(140, 15, r"有效(1/3)周期:{0:.2f}s".format(First3T))
+        canvas.text(140, 13.5, r"1/10周期:{0:.2f}s".format(First10T))
         canvas.text(140, 12, r"平均波高H$^-$:{0:.2f}cm".format(AverageWaveHeight))
         canvas.text(140, 10.5, r"最大波高H$_m$$_a$$_x$:{0:.2f}cm".format(max(subWaveHeightList)))
-        canvas.text(140, 9, r"有效波高H$_s$:{0:.2f}cm".format(EffectiveWaveHeight))
+        canvas.text(140, 9, r"有效(1/3)波高H$_s$:{0:.2f}cm".format(EffectiveWaveHeight))
         canvas.text(140, 7.5, r"1/10波高H$_1$$_/$$_1$$_0$:{0:.2f}cm".format(First10WaveHeight))
         canvas.text(140, 6, r"13%波高H$_1$$_3$$_\%$:{0:.2f}cm".format(First13WaveHeight))
         canvas.text(140, 4.5, r"均方根波高H$_r$$_m$$_s$:{0:.2f}cm".format(AverageWaveHeightSquareroot))
+
 
         canvas.text(140, 3,
                     r"H$_1$$_/$$_1$$_0$实验:H$_1$$_/$$_1$$_0$={0:.2f}H$^-$|理论:H$_1$$_/$$_1$$_0$=2.03H$^-$".format(
@@ -704,8 +717,8 @@ class CoastalDataProc(QWidget):
 
     def drawRayleighDistribution(self, index, canvas, aH, subWaveHeightList):
         canvas.set_title("瑞利分布#仪器{}".format(index + 1), loc='left')
-        canvas.set_xlabel("波高(cm)", fontsize=self.ui.sy2_AxisFontSize.value())
-        canvas.set_ylabel("百分比", fontsize=self.ui.sy2_AxisFontSize.value())
+        canvas.set_xlabel("H(cm)", fontsize=self.ui.sy2_AxisFontSize.value())
+        canvas.set_ylabel("p(H)", fontsize=self.ui.sy2_AxisFontSize.value())
         ax = plt.gca()
         Rayleigh_step = self.ui.spinBox_Rayleighstep.value()
         Rayleigh_X = list(self.floatRange(0, 200, 1, 1))
@@ -728,7 +741,7 @@ class CoastalDataProc(QWidget):
     def drawFFT(self, index, canvas):
         canvas.set_title("波谱#仪器{}".format(index + 1), loc='left')
         canvas.set_xlabel("f(Hz)", fontsize=self.ui.sy2_AxisFontSize.value())
-        canvas.set_ylabel("百分比", fontsize=self.ui.sy2_AxisFontSize.value())
+        canvas.set_ylabel("Amp.(m)", fontsize=self.ui.sy2_AxisFontSize.value())
         ax = plt.gca()
         amp, fre, pha = self.WaveFFT(self.smooth_data[index], self.timeline)  # 调用函数
         smoothed = self.moving_average(amp, self.ui.spinBox_smoothWindowSize_WaveFFT.value())
@@ -780,10 +793,9 @@ class CoastalDataProc(QWidget):
                                 linewidth=self.ui.sy1_waveformLineWidth.value(), color=colors[i])
                     legend_line.append('波高仪#{}--波形'.format(i + 1))
                 else:
-                    canvas.scatter(self.sy1_timeline, self.sy1_coldatas[index][i],
-                                   s=self.ui.sy1_waveformPointsScale.value(), color=colors[i], marker='o', label="1")
-                    canvas.plot(self.sy1_timeline, y_smooth, linewidth=self.ui.sy1_waveformLineWidth.value(),
-                                color=colors[i])
+                    canvas.scatter(self.sy1_timeline, self.sy1_coldatas[index][i],s=self.ui.sy1_waveformPointsScale.value(), color=colors[i], marker='o', label="1")
+                    canvas.plot(self.sy1_timeline, y_smooth, linewidth=self.ui.sy1_waveformLineWidth.value(),color=colors[i])
+                    #canvas.plot(self.sy1_timeline, self.sy1_coldatas[index][i], linewidth=self.ui.sy1_waveformLineWidth.value(),color=colors[i+1])
                     legend_line.append('波高仪#{}--波形'.format(i + 1))
                     legend_list.append('波高仪#{}--波高<未降噪>'.format(i + 1))
             else:
@@ -1447,7 +1459,9 @@ class CoastalDataProc(QWidget):
             canvas.text(10, 42, r"静水面▼", fontsize=10, c='blue')
 
         # 绘制波压力特征图
-
+        for x in range(int(self.ui.sy4_PressFormIgnoreX.value())):
+            #pass
+            aver_P_List[-(x+1)] = 0
         PressFeature_Y = [22, 27, 32, 37, 42, 47, 52, 57, 62, 67]
         PressFeature_X = [PressFeature_Y[P_index] - (85 / 63) * (((85 * PressFeature_Y[P_index] / 63 + 15 + X_Shift) -
                                                                   aver_P_List[
@@ -1460,24 +1474,23 @@ class CoastalDataProc(QWidget):
                                                            aver_P_List[
                                                                P_index] * self.ui.sy4_PressForm_Scale.value()) - (
                                                                   85 * PressFeature_Y[P_index] / 63 + 15 + X_Shift))
-                   for P_index in range(len(PressFeature_Y))]
+                   for P_index in range(len(PressFeature_Y))][0:-(int(self.ui.sy4_PressFormIgnoreX.value())-1)]
         Shift_X = [((85 * PressFeature_Y[P_index] / 63 + 15 + X_Shift) - aver_P_List[
-            P_index] * self.ui.sy4_PressForm_Scale.value()) for P_index in range(len(PressFeature_Y))]
+            P_index] * self.ui.sy4_PressForm_Scale.value()) for P_index in range(len(PressFeature_Y))][0:-(int(self.ui.sy4_PressFormIgnoreX.value())-1)]
 
         canvas.plot(Shift_X, Shift_Y, linewidth=LineWidth, color='blue')
 
         for P_index_1 in range(len(Shift_Y)):
-            canvas.plot([85 * PressFeature_Y[P_index_1] / 63 + 15 + X_Shift, Shift_X[P_index_1]],
-                        [PressFeature_Y[P_index_1], Shift_Y[P_index_1]], linewidth=LineWidth, color='black', ls='-.')
+            canvas.plot([85 * PressFeature_Y[P_index_1] / 63 + 15 + X_Shift, Shift_X[P_index_1]],[PressFeature_Y[P_index_1], Shift_Y[P_index_1]], linewidth=LineWidth, color='black', ls='-.')
 
         if self.ui.checkBox_sy4_bDrawPress.isChecked():
-            for index in range(len(PressFeature_Y)):
+            for index in range(len(PressFeature_Y[0:-(int(self.ui.sy4_PressFormIgnoreX.value())-1)])):
                 canvas.text(PressFeature_X[index] + self.ui.sy4_PressForm_PressFrontShift_X.value(),
                             PressFeature_Y[index] + self.ui.sy4_PressForm_PressFrontShift_Y.value(),
                             r"{0:.4f}kPa".format(aver_P_List[index]), fontsize=10)
 
         if self.ui.checkBox_sy4_bDrawEachSerialLine.isChecked():
-            for Y in PressFeature_Y:
+            for Y in PressFeature_Y[0:-(int(self.ui.sy4_PressFormIgnoreX.value())-1)]:
                 canvas.plot([0, 85 * Y / 63 + 15 + X_Shift], [Y, Y], linewidth=LineWidth, color='black', ls='-.')
                 canvas.text(0, Y + self.ui.sy4_PressForm_PressFrontShift_Y.value(),
                             r"#{}".format(PressFeature_Y.index(Y) + 1), fontsize=10, c='blue')

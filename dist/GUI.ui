@@ -78,7 +78,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(记得填写波高)</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy1">
@@ -735,7 +736,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>第一次实验:</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;第一次实验:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="sy1_contrastform_H_2">
@@ -770,7 +771,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>第二次实验:</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;第二次实验:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_30">
@@ -783,7 +784,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>第三次实验:</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;第三次实验:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="sy1_contrastform_H_3">
@@ -806,6 +807,25 @@
        </property>
        <property name="value">
         <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="Line" name="line_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>100</y>
+         <width>161</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>3</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </widget>
@@ -1117,6 +1137,25 @@
        <double>1.000000000000000</double>
       </property>
      </widget>
+     <widget class="Line" name="line_4">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>30</y>
+        <width>16</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_98">
      <property name="geometry">
@@ -1147,6 +1186,22 @@
       <double>15.000000000000000</double>
      </property>
     </widget>
+    <widget class="QLabel" name="label_51">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>0</y>
+       <width>201</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;计算结果不一定对&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;自己取舍&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;或者自己改代码&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub项目源码&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -1162,7 +1217,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+瑞利分布不一定对</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy2">
@@ -2321,6 +2377,22 @@
       <string>坐标轴字体大小: </string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_71">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>0</y>
+       <width>201</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;计算结果不一定对&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;自己取舍&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;或者自己改代码&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub项目源码&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -2336,7 +2408,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算(没搞完)</string>
+      <string>开始计算
+(理论图没做完)</string>
      </property>
     </widget>
     <widget class="QComboBox" name="filelist_sy3">
@@ -3059,7 +3132,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_1">
           <property name="text">
-           <string>波高仪#1</string>
+           <string>压力计#1</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3069,7 +3142,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_2">
           <property name="text">
-           <string>波高仪#2</string>
+           <string>压力计#2</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3079,7 +3152,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_3">
           <property name="text">
-           <string>波高仪#3</string>
+           <string>压力计#3</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3089,7 +3162,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_4">
           <property name="text">
-           <string>波高仪#4</string>
+           <string>压力计#4</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3099,7 +3172,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_5">
           <property name="text">
-           <string>波高仪#5</string>
+           <string>压力计#5</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3109,7 +3182,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy3_ch_P_6">
           <property name="text">
-           <string>波高仪#6</string>
+           <string>压力计#6</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -3447,7 +3520,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>压力系数: </string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff007f;&quot;&gt;压力系数: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="sy3_PressForm_Scale">
@@ -3634,6 +3707,25 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>311</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </widget>
     <widget class="QDoubleSpinBox" name="sy3_AxisFontSize">
      <property name="geometry">
@@ -3662,6 +3754,22 @@
      </property>
      <property name="text">
       <string>坐标轴字体大小: </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_93">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>0</y>
+       <width>201</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;计算结果不一定对&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;自己取舍&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;或者自己改代码&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub项目源码&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -3721,7 +3829,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(浅水变形没算)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_41">
@@ -4387,7 +4496,7 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>81</width>
+         <width>94</width>
          <height>162</height>
         </rect>
        </property>
@@ -4401,7 +4510,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_1">
           <property name="text">
-           <string>波高仪#1</string>
+           <string>压力计#1</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4411,7 +4520,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_2">
           <property name="text">
-           <string>波高仪#2</string>
+           <string>压力计#2</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4421,7 +4530,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_3">
           <property name="text">
-           <string>波高仪#3</string>
+           <string>压力计#3</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4431,7 +4540,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_4">
           <property name="text">
-           <string>波高仪#4</string>
+           <string>压力计#4</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4441,7 +4550,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_5">
           <property name="text">
-           <string>波高仪#5</string>
+           <string>压力计#5</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4451,7 +4560,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_6">
           <property name="text">
-           <string>波高仪#6</string>
+           <string>压力计#6</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4461,7 +4570,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_7">
           <property name="text">
-           <string>波高仪#7</string>
+           <string>压力计#7</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4471,7 +4580,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_8">
           <property name="text">
-           <string>波高仪#8</string>
+           <string>压力计#8</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4481,7 +4590,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_9">
           <property name="text">
-           <string>波高仪#9</string>
+           <string>压力计#9</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4491,7 +4600,7 @@
         <item>
          <widget class="QCheckBox" name="checkBox_sy4_ch_P_10">
           <property name="text">
-           <string>波高仪#10</string>
+           <string>压力计#10</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -4825,11 +4934,11 @@
         <x>10</x>
         <y>112</y>
         <width>71</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>压力系数: </string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff007f;&quot;&gt;压力系数: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="sy4_PressForm_Scale">
@@ -4851,7 +4960,7 @@
        <double>1.000000000000000</double>
       </property>
       <property name="value">
-       <double>15.000000000000000</double>
+       <double>25.000000000000000</double>
       </property>
      </widget>
      <widget class="QLabel" name="label_80">
@@ -4903,25 +5012,6 @@
       </property>
       <property name="text">
        <string>标注压力</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_sy4_bDraw1serialLine">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>90</y>
-        <width>131</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>分界线用于确定波峰</string>
-      </property>
-      <property name="text">
-       <string>绘制1号传感器水平线</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -5016,6 +5106,57 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="label_92">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>52</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;忽略后x个数据: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="sy4_PressFormIgnoreX">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>50</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>10.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>1.000000000000000</double>
+      </property>
+      <property name="value">
+       <double>4.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>321</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </widget>
     <widget class="QDoubleSpinBox" name="sy4_AxisFontSize">
      <property name="geometry">
@@ -5046,6 +5187,22 @@
       <string>坐标轴字体大小: </string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_108">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>0</y>
+       <width>201</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;计算结果不一定对&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;自己取舍&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;或者自己改代码&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub项目源码&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_5">
     <attribute name="title">
@@ -5061,7 +5218,8 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始计算</string>
+      <string>开始计算
+(记得填Hr和Lr)</string>
      </property>
     </widget>
     <widget class="QWidget" name="verticalLayoutWidget_14">
@@ -5589,7 +5747,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>沙纹高度Hr(mm): </string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;沙纹高度Hr(mm): &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="sy5_ShawenHr">
@@ -5621,7 +5779,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>沙纹宽度Lr(mm): </string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;沙纹宽度Lr(mm): &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="sy5_ShawenLr">
@@ -5688,6 +5846,73 @@
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_6">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>80</y>
+        <width>3</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_109">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>20</y>
+        <width>231</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;计算结果不一定对&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;自己取舍&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;或者自己改代码&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ionlylikesg/CoastalDynamicsExpProcessing&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub项目源码&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="openExternalLinks">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_110">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>80</y>
+        <width>101</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;从视频里面读&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;(11cm波高)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
