@@ -254,7 +254,7 @@ class CoastalDataProc(QWidget):
                 for sig_file in files:
                     if '~' in sig_file: continue
                     sheet = xlrd.open_workbook(os.getcwd() + '\\' + root + '\\' + sig_file).sheets()[0]
-                    sig_list.append((sheet.col_values(0)[1:-1], [x * 100 for x in sheet.col_values(1)[1:-1]]))
+                    sig_list.append((sheet.col_values(0)[1:-1], [x * self.ui.sy3_Press_Scale.value() for x in sheet.col_values(1)[1:-1]]))
                 self.sy3_P_rawdata.append(sig_list)
 
         self.sy3_P_smoothdatas = []
@@ -349,7 +349,7 @@ class CoastalDataProc(QWidget):
                 for sig_file in files:
                     if '~' in sig_file: continue
                     sheet = xlrd.open_workbook(os.getcwd() + '\\' + root + '\\' + sig_file).sheets()[0]
-                    sig_list.append((sheet.col_values(0)[1:-1], [x * 100 for x in sheet.col_values(1)[1:-1]]))
+                    sig_list.append((sheet.col_values(0)[1:-1], [x * self.ui.sy4_Press_Scale.value() for x in sheet.col_values(1)[1:-1]]))
                 self.sy4_P_rawdata.append(sig_list)
 
         self.sy4_P_smoothdatas = []
